@@ -34,6 +34,5 @@ func Req(address string, method string, key string, value string) *Request {
 		q.Add("value", value)
 	}
 	req.URL.RawQuery = q.Encode()
-	reqInternal := Request{req}
-	return &reqInternal
+	return &Request{req}
 }

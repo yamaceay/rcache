@@ -16,6 +16,7 @@ func (req *Request) Res() string {
 		fmt.Printf("server returns %d error: %s", resp.StatusCode, err)
 	}
 	defer resp.Body.Close()
+
 	bodyBytes, _ := io.ReadAll(resp.Body)
 	return string(bodyBytes)
 }

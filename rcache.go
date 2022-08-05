@@ -7,11 +7,11 @@ import (
 )
 
 type Request struct {
-	ptr *http.Request
+	R *http.Request
 }
 
 func (req *Request) Res() string {
-	resp, err := http.DefaultClient.Do(req.ptr)
+	resp, err := http.DefaultClient.Do(req.R)
 	if err != nil {
 		fmt.Printf("server returns %d error: %s", resp.StatusCode, err)
 	}

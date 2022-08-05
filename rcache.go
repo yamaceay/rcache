@@ -9,7 +9,10 @@ import (
 func Send(address string, method string, key string, value string) (string, error) {
 	fullPath := fmt.Sprintf("%s/%s", address, method)
 
-	req, _ := http.NewRequest("GET", fullPath, nil)
+	req, err := http.NewRequest("GET", fullPath, nil)
+	if err != nil {
+		return "", fmt.Errorf("http request failed: %s", err)
+	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	q := req.URL.Query()
@@ -27,6 +30,9 @@ func Send(address string, method string, key string, value string) (string, erro
 	}
 	defer resp.Body.Close()
 
-	bodyBytes, _ := io.ReadAll(resp.Body)
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "", fmt.Errorf("body cannot be read: %s", err)
+	}
 	return string(bodyBytes), nil
 }

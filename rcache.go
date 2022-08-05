@@ -6,22 +6,7 @@ import (
 	"net/http"
 )
 
-type Request struct {
-	R *http.Request
-}
-
-func (req *Request) Res() string {
-	resp, err := http.DefaultClient.Do(req.R)
-	if err != nil {
-		fmt.Printf("server returns %d error: %s", resp.StatusCode, err)
-	}
-	defer resp.Body.Close()
-
-	bodyBytes, _ := io.ReadAll(resp.Body)
-	return string(bodyBytes)
-}
-
-func Req(address string, method string, key string, value string) *Request {
+func Send(address string, method string, key string, value string) string {
 	fullPath := fmt.Sprintf("%s/%s", address, method)
 
 	req, _ := http.NewRequest("GET", fullPath, nil)
@@ -35,5 +20,13 @@ func Req(address string, method string, key string, value string) *Request {
 		q.Add("value", value)
 	}
 	req.URL.RawQuery = q.Encode()
-	return &Request{req}
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		fmt.Printf("server returns %d error: %s", resp.StatusCode, err)
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, _ := io.ReadAll(resp.Body)
+	return string(bodyBytes)
 }

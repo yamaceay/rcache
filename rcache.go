@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Send(address string, method string, key string, value string) string {
+func Send(address string, method string, key string, value string) (string, error) {
 	fullPath := fmt.Sprintf("%s/%s", address, method)
 
 	req, _ := http.NewRequest("GET", fullPath, nil)
@@ -23,10 +23,10 @@ func Send(address string, method string, key string, value string) string {
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		fmt.Printf("server returns %d error: %s", resp.StatusCode, err)
+		return "", fmt.Errorf("server returns %d error: %s", resp.StatusCode, err)
 	}
 	defer resp.Body.Close()
 
 	bodyBytes, _ := io.ReadAll(resp.Body)
-	return string(bodyBytes)
+	return string(bodyBytes), nil
 }

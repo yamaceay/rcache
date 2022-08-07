@@ -10,7 +10,7 @@ import (
 // Gets all the keys from the Redis database
 func Keys(address string) ([]string, error) {
 	var keys []string
-	if response, err := Send(address, "get", "", ""); err != nil {
+	if response, err := Send("get", address, "", ""); err != nil {
 		return []string{}, fmt.Errorf("unable to fetch all keys: %s", err)
 	} else if err := json.Unmarshal([]byte(response), &keys); err != nil {
 		return []string{}, fmt.Errorf("cannot unmarshal keys: %s", err)

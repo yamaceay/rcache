@@ -20,7 +20,7 @@ func Keys(address string) ([]string, error) {
 
 // Gets the object from the Redis database
 func Get(address string, key string) (string, error) {
-	return Send(address, "get", key, "")
+	return Send("get", address, key, "")
 }
 
 // Sets the object in Redis database to a given value

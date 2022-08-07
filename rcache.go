@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// Is equal to Send("set", address, "", "")
+// Gets all the keys from the Redis database
 func Keys(address string) ([]string, error) {
 	var keys []string
 	if response, err := Send(address, "get", "", ""); err != nil {
@@ -18,12 +18,12 @@ func Keys(address string) ([]string, error) {
 	return keys, nil
 }
 
-// Is equal to Send("get", address, key, "")
+// Gets the object from the Redis database
 func Get(address string, key string) (string, error) {
 	return Send(address, "get", key, "")
 }
 
-// Is equal to Send("set", address, key, value)
+// Sets the object in Redis database to a given value
 func Set(address string, key string, value string) (string, error) {
 	return Send("set", address, key, value)
 }

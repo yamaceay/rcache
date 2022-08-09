@@ -58,7 +58,7 @@ func Send(method string, address string, key string, value string) (string, erro
 
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		return "", fmt.Errorf("server returns %d error: %s", resp.StatusCode, err)
+		return "", fmt.Errorf("server returns error: %s", err)
 	}
 	defer resp.Body.Close()
 

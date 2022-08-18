@@ -24,8 +24,9 @@ func Get(address string, key string) (string, error) {
 }
 
 // Sets the object in Redis database to a given value
-func Set(address string, key string, value string) (string, error) {
-	return Send("set", address, key, value)
+func Set(address string, key string, value string) error {
+	_, err := Send("set", address, key, value)
+	return err
 }
 
 // Creates a HTTP request and returns the response string
